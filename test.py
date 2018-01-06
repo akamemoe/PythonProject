@@ -6,7 +6,7 @@ import re
 def main():
 	r = requests.get('https://www.baidu.com')
 	print(r.status_code)
-	print(r.content.decode('utf-8'))
+	# print(r.content.decode('utf-8'))
 	title = re.findall(r'<title>(.*)</title>',r.content.decode('utf-8'))
 	print('title:',title)
 
