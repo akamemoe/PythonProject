@@ -4,7 +4,6 @@ import requests
 import re,os
 import time
 
-gui.PAUSE = 1
 
 def get_env_var():
 	print('NAME->',os.environ('name'))
