@@ -6,7 +6,7 @@ import time
 
 
 def get_env_var():
-	print('NAME->',os.environ('name'))
+	print('NAME->',os.getenv('name'))
 
 
 def main():
