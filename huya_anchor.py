@@ -9,7 +9,7 @@ base_url = 'http://www.huya.com/'
 
 def send_msg(text='title',desp='desp'):
     base_url = 'https://sc.ftqq.com/' + os.getenv('scu_key') +'.send'
-    r = requests.post(base_url,params={'text':text,'desp':desp})
+    r = requests.get(base_url,params={'text':text,'desp':desp})
     return True if r and r.status_code == 200 else False
 
 def fetch():
