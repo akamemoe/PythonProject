@@ -30,7 +30,7 @@ def fetch():
             html = r.content.decode('utf-8')
             title = re.findall(r'<h1 id="J_roomTitle">(.+)</h1>',html)[0]
             status = re.findall(r'<span class="host-prevStartTime"><i></i><span>(.+)</span></span>',html)
-            fans = re.findall(r'<div id="activityCount">(\d+)</div>',html)
+            fans = re.findall(r'<div id="activityCount">(\d+)</div>',html)[0]
             last_live = '直播中'
             if status and status[0]:
                 last_live = status[0]
