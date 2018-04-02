@@ -1,15 +1,16 @@
 #encoding=utf-8
 
 import requests
-import re,os
+import re,os,time
 
 
 anchors = []
-base_url = 'http://www.huya.com/'
+huya_url = 'http://www.huya.com/'
+
 
 def send_msg(text='title',desp='desp'):
-    base_url = 'https://sc.ftqq.com/' + os.getenv('scu_key') +'.send'
-    r = requests.get(base_url,params={'text':text,'desp':desp})
+    notify_url = 'https://sc.ftqq.com/' + os.getenv('scu_key') +'.send'
+    r = requests.get(notify_url,params={'text':text,'desp':desp})
     return True if r and r.status_code == 200 else False
 
 def fetch():
@@ -20,17 +21,23 @@ def fetch():
             print(line)
             a,b = line.split(':')
             anchors.append((a,b))
-    txt = '|  主播   |      标题      |  状态 |\n|:----------:|:-------------:|:------:|\n'
+    txt = '| 主播 | 标题 | 状态 | 订阅 |\n|:---:|:---:|:---:|:---:|\n'
     for suffix,anchor in anchors:
-        r = requests.get(base_url + suffix)
-        html = r.content.decode('utf-8')
-        title = re.findall(r'<h1 id="J_roomTitle">(.+)</h1>',html)[0]
-        status = re.findall(r'<span class="host-prevStartTime"><i></i><span>(.+)</span></span>',html)
-        last_live = '直播中'
-        if status and status[0]:
-            last_live = status[0]
+        time.sleep(500)
+
+        try:
+            r = requests.get(huya_url + suffix)
+            html = r.content.decode('utf-8')
+            title = re.findall(r'<h1 id="J_roomTitle">(.+)</h1>',html)[0]
+            status = re.findall(r'<span class="host-prevStartTime"><i></i><span>(.+)</span></span>',html)
+            fans = re.findall(r'<div id="activityCount">(\d+)</div>',html)
+            last_live = '直播中'
+            if status and status[0]:
+                last_live = status[0]
+        except:
+            print('ERROR:' + huya_url + suffix)
         # print(anchor + '->' + title + '->' + last_live)
-        txt += ('|' + anchor + '|' + title + '|' + last_live + '|\n')
+        txt += ('|' + anchor + '|' + title + '|' + last_live + '|' + fans + '|\n')
     # with open('result.txt','w',encoding='utf-8') as f:
     #     f.write(txt)
     if send_msg('主播直播状态',txt):
