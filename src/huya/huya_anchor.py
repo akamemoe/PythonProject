@@ -14,7 +14,7 @@ def send_msg(text='title',desp='desp'):
     return True if r and r.status_code == 200 else False
 
 def fetch():
-    with open('anchors.txt','r',encoding='utf-8') as f:
+    with open('./config/anchors.txt','r',encoding='utf-8') as f:
         lines = f.readlines()
         for line in lines:
             line = line.strip()
@@ -23,7 +23,7 @@ def fetch():
             anchors.append((a,b))
     txt = '| 主播 | 标题 | 状态 | 订阅 |\n|:---:|:---:|:---:|:---:|\n'
     for suffix,anchor in anchors:
-        time.sleep(500)
+        # time.sleep(500)
 
         try:
             r = requests.get(huya_url + suffix)

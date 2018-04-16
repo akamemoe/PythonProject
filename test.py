@@ -3,7 +3,7 @@
 import requests
 import re,os
 import time
-import huya_anchor as huya
+from src.huya import huya_anchor as huya
 
 
 def get_env_var():
