@@ -23,7 +23,7 @@ def fetch(file_path):
             anchors.append((a,b))
     txt = '| 主播 | 标题 | 状态 | 订阅 |\n|:---:|:---:|:---:|:---:|\n'
     for suffix,anchor in anchors:
-        # time.sleep(500)
+        time.sleep(100)
 
         try:
             r = requests.get(huya_url + suffix)
