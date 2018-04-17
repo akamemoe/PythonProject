@@ -7,14 +7,14 @@ from src.huya import huya_anchor as huya
 
 
 def get_env_var():
-	print('NAME->',os.getenv('name'))
+    print('NAME->',os.getenv('name'))
 
 
 def main():
     try:
-	   huya.fetch()
+       huya.fetch()
     except BaseException,e:
         print(e)
 
 if __name__ == '__main__':
-	main()
+    main()
