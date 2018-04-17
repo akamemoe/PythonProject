@@ -13,8 +13,8 @@ def send_msg(text='title',desp='desp'):
     r = requests.get(notify_url,params={'text':text,'desp':desp})
     return True if r and r.status_code == 200 else False
 
-def fetch():
-    with open('/src/huya/config/anchors.txt','r',encoding='utf-8') as f:
+def fetch(file_path):
+    with open(file_path,'r',encoding='utf-8') as f:
         lines = f.readlines()
         for line in lines:
             line = line.strip()

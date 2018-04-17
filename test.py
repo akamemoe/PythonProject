@@ -12,7 +12,7 @@ def get_env_var():
 
 def main():
     try:
-       huya.fetch()
+       huya.fetch('./src/huya/config/anchors.txt')
     except BaseException as e:
         print(e)
 
