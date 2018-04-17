@@ -13,7 +13,7 @@ def get_env_var():
 def main():
     try:
        huya.fetch()
-    except BaseException,e:
+    except BaseException as e:
         print(e)
 
 if __name__ == '__main__':
