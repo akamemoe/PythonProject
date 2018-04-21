@@ -10,7 +10,7 @@ huya_url = 'http://www.huya.com/'
 
 def send_msg(text='title',desp='desp'):
     notify_url = 'https://sc.ftqq.com/' + os.getenv('scu_key') +'.send'
-    r = requests.get(notify_url,params={'text':text,'desp':desp})
+    r = requests.post(notify_url,data={'text':text,'desp':desp})
     return True if r and r.status_code == 200 else False
 
 def fetch(file_path):
@@ -18,7 +18,7 @@ def fetch(file_path):
         lines = f.readlines()
         for line in lines:
             line = line.strip()
-            print(line)
+            # print(line)
             a,b = line.split(':')
             anchors.append((a,b))
     txt = '| 主播 | 标题 | 状态 | 订阅 |\n|:---:|:---:|:---:|:---:|\n'
