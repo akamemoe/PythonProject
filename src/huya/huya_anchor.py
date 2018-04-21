@@ -23,10 +23,10 @@ def fetch(file_path):
             anchors.append((a,b))
     txt = '| 主播 | 标题 | 状态 | 订阅 |\n|:---:|:---:|:---:|:---:|\n'
     for suffix,anchor in anchors:
-        time.sleep(100)
+        time.sleep(1000)
 
         try:
-            r = requests.get(huya_url + suffix)
+            r = requests.get(huya_url + suffix,timeout=5)
             html = r.content.decode('utf-8')
             title = re.findall(r'<h1 id="J_roomTitle">(.+)</h1>',html)[0]
             status = re.findall(r'<span class="host-prevStartTime"><i></i><span>(.+)</span></span>',html)
@@ -36,10 +36,8 @@ def fetch(file_path):
                 last_live = status[0]
         except:
             print('ERROR:' + huya_url + suffix)
-        # print(anchor + '->' + title + '->' + last_live)
-        txt += ('|' + anchor + '|' + title + '|' + last_live + '|' + fans + '|\n')
-    # with open('result.txt','w',encoding='utf-8') as f:
-    #     f.write(txt)
+        else:
+            txt += ('|' + anchor + '|' + title + '|' + last_live + '|' + fans + '|\n')
     if send_msg('主播直播状态',txt):
         print('wechat message push success.')
     else:

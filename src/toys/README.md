@@ -108,3 +108,17 @@
 	if __name__ == '__main__':
 		main()
 	```
+
+### 7.抓取[电影天堂](https:/www.dy2018.com)下载链接([dytt.py](https://github.com/Akame-moe/PythonProject/blob/master/src/toys/dytt.py)) ###
+
+- #### 说明：  
+	可以在命令行搜索电影天堂的电影，免的去看网站那些广告了。
+
+- #### 使用：
+	直接运行`python dytt.py`根据提示操作即可。
+	
+
+### 8.蜻蜓代理([qtproxy.py](https://github.com/Akame-moe/PythonProject/blob/master/src/toys/qtproxy.py)) ###
+
+- #### 说明：  
+	蜻蜓代理API的封装。

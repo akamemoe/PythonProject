@@ -4,6 +4,7 @@ import requests
 import time,os,re
 import hashlib
 import threading
+import argparse
 
 
 class Downloader():
@@ -41,10 +42,11 @@ class Downloader():
         tmpfile = os.path.join(self.dirctory,'{}.download-{}'.format(self.md5,order))
         task = DownloadTask(self.url,tmpfile,start,end,self.timeout)
         self.threads.append(task)
+        #这里直接开启线程后join是错误的，这样实际在运行中的还是一个线程，应该把所有线程start然后join
         task.start()
         task.join()
 
-    def rewrite(fw,fr):
+    def rewrite(self,fw,fr):
         chunksize = 1024 * 1024 #1M
         while True:
             chunk = fr.read(chunksize)
@@ -93,9 +95,22 @@ class DownloadTask(threading.Thread):
 
 
 def main():
-    file_url = 'http://localhost:8080/download.raw'
-    downloader = Downloader(file_url,'a.txt',3)
-    downloader.download()
+    parse = argparse.ArgumentParser()
+    parse.add_argument("-u",type=str,help="file url.",required=True)
+    parse.add_argument("-n",type=int,default=3,help="the number of threading.",choices=range(1,10))
+    parse.add_argument("-o",type=str,default='',help="file url.")
+    args = parse.parse_args()
+
+    if args.o is None or args.o == '':
+        args.o = args.u[args.u.rindex('/')+1:]
+    # print(args)
+    downloader = Downloader(args.u,args.o,args.n)
+    try:
+        downloader.download()
+    except Exception as e:
+        print('download error!-->',e)
+    else:
+        print('downloader done.')
         
 
 def processer():
