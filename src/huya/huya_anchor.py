@@ -23,10 +23,10 @@ def fetch(file_path):
             anchors.append((a,b))
     txt = '| 主播 | 标题 | 状态 | 订阅 |\n|:---:|:---:|:---:|:---:|\n'
     for suffix,anchor in anchors:
-        time.sleep(1000)
-
+        # time.sleep(1000)
+        print('watching:',anchor)
         try:
-            r = requests.get(huya_url + suffix,timeout=5)
+            r = requests.get(huya_url + suffix,timeout=3)
             html = r.content.decode('utf-8')
             title = re.findall(r'<h1 id="J_roomTitle">(.+)</h1>',html)[0]
             status = re.findall(r'<span class="host-prevStartTime"><i></i><span>(.+)</span></span>',html)
