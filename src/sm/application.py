@@ -43,7 +43,7 @@ def api_upload():
         file = request.files['smfile']
         fdate = time.strftime("%Y/%m/%d", time.localtime())
         cur_time = now_time()
-        storename = '{}{}'.format(cur_time,os.path.splitext(file.filename)[1])
+        storename = '{}{}'.format(cur_time,os.path.splitext(file.filename)[1].lower())
         fdir = '{}/{}'.format(config['folder'],fdate)
         if not os.path.exists(fdir):
             os.makedirs(fdir)
