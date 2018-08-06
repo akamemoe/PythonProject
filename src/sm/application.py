@@ -108,7 +108,7 @@ def api_upload():
         file = request.files['smfile']
         extname = os.path.splitext(file.filename)[1].lower()
         if extname not in ['.jpg','.jpeg','.png']:
-            return make_response(jsonify({'status':'error','msg':'image format not support.'}))
+            return jsonify({'status':'error','msg':'image format not support.'})
         fdate = time.strftime("%Y/%m/%d", time.localtime())
         cur_time = now_time()
         #存储文件名由uid前三位 + 时间戳 + 原扩展名组成

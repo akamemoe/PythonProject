@@ -1,6 +1,6 @@
 # 一些Python小项目
 
-[![Build Status](https://travis-ci.org/Akame-moe/PythonProject.svg?branch=master)](https://travis-ci.org/Akame-moe/PythonProject)
+![Build Status](https://travis-ci.org/Akame-moe/PythonProject.svg?branch=master) ![Python Version](https://img.shields.io/badge/python-3.5.2-blue.svg)
 
 ## 1. [虎牙主播通知](https://github.com/Akame-moe/PythonProject/tree/master/src/huya)
    详情请参阅[这里](https://github.com/Akame-moe/PythonProject/tree/master/src/huya)

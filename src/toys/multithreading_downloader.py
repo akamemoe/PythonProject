@@ -31,22 +31,22 @@ class Downloader():
         n = self.threadCount - 1
         #先下载整除的部分然后下载剩余部分
         for order in range(n):
-            self.download_part(order,order*blocksize,(order+1)*blocksize-1)
-        self.download_part(n,n*blocksize,filesize)
-        self.merge_file()
+            self._build_threads(order,order*blocksize,(order+1)*blocksize-1)
+        self._build_threads(n,n*blocksize,filesize)
+        self._start_threads()
+        self._merge_file()
 
-    def start(self):
-        pass
+    def _start_threads(self):
+        for t in self.threads:
+            t.start()
+            t.join()
 
-    def download_part(self,order,start,end):
+    def _build_threads(self,order,start,end):
         tmpfile = os.path.join(self.dirctory,'{}.download-{}'.format(self.md5,order))
         task = DownloadTask(self.url,tmpfile,start,end,self.timeout)
         self.threads.append(task)
-        #这里直接开启线程后join是错误的，这样实际在运行中的还是一个线程，应该把所有线程start然后join
-        task.start()
-        task.join()
 
-    def rewrite(self,fw,fr):
+    def _rewrite(self,fw,fr):
         chunksize = 1024 * 1024 #1M
         while True:
             chunk = fr.read(chunksize)
@@ -55,14 +55,14 @@ class Downloader():
             else:
                 break
 
-    def merge_file(self):
+    def _merge_file(self):
         filelist = os.listdir(self.dirctory)
         with open(os.path.join(self.dirctory,self.finalname),'wb') as fw:
             for order in range(self.threadCount):
                 pth = os.path.join(self.dirctory,'{}.download-{}'.format(self.md5,order))
                 if os.path.exists(pth):
                     with open(pth,'rb') as fr:
-                        self.rewrite(fw,fr)
+                        self._rewrite(fw,fr)
 
 
 class DownloadTask(threading.Thread):
@@ -98,7 +98,7 @@ def main():
     parse = argparse.ArgumentParser()
     parse.add_argument("-u",type=str,help="file url.",required=True)
     parse.add_argument("-n",type=int,default=3,help="the number of threading.",choices=range(1,10))
-    parse.add_argument("-o",type=str,default='',help="file url.")
+    parse.add_argument("-o",type=str,default='',help="file name.")
     args = parse.parse_args()
 
     if args.o is None or args.o == '':

@@ -39,7 +39,7 @@ nginx configuraion:
     }
     //calc page
     var curpage = 1;
-    var pagecount = Math.round((imglinks.length - 1)/pagesize)+1;
+    var pagecount = Math.floor((imglinks.length - 1)/pagesize)+1;
     //console.log('pagecount:'+pagecount);
 
     //page&pagecount
@@ -114,5 +114,15 @@ nginx configuraion:
     txt.style="text-align: center;";
     txt.innerHTML = '本站资源全部来互联网，如有违规，请联系管理员&lt; me AT gentlehu DOT com &gt;删除';
     document.body.appendChild(txt);
+
+    //添加键盘监听，方便翻页
+    document.onkeydown = function(e){
+        e = e || window.e;
+        if(e.keyCode == 37){
+            prevbtn.click();
+        }else if(e.keyCode == 39){
+            nextbtn.click();
+        }
+    }
 
 })(5);//parameter:pagesize
