@@ -1170,7 +1170,7 @@
 /admin/FCKeditor/editor/filemanager/upload/test.php
 /phpMyAdmin-2.11.0
 /admin/upload2.php
-/phpÄ¾Âí.php
+/phpæœ¨é©¬.php
 /phpMyAdmin-4.4.2-all-languages
 /Dumper
 /SoftDown.php
